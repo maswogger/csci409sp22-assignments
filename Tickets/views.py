@@ -1,9 +1,13 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from django.http import HttpResponse
+from .models import Reservation
 
-# Create your views here.
 def index(request):
-    return HttpResponse('Hello from Flights');
+    # Nothing to do here
+    return HttpResponse('Hello from tickets')
+
 def Ticket_search(request, confirmation_number):
-    return HttpResponse("Search for tickets confirmation number:  {}".format(confirmation_number))
+    # Select the singular reservation for the confirmation number
+    # Note: the confirmation_number is the id in the Reservation table
+    reservation = Reservation.objects.get(id=confirmation_number)
+
+    return HttpResponse('Number of tickets for confirmation number: ' + str(confirmation_number) + " is " + str(reservation.num_people))
